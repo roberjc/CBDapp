@@ -33,8 +33,8 @@
 
                     <div class="pi-col-sm-9 pi-center-text-xs">
                         <h3 class="pi-weight-300">
-					itemList en CouchDB
-				</h3>
+                    itemList en CouchDB
+                </h3>
 
                         <p class="lead-16">
                             Registra tus artículos para la compra facilmente con esta App!
@@ -47,8 +47,8 @@
                     <div class="pi-col-sm-3 pi-text-right pi-center-text-xs">
                         <p class="pi-margin-top-5">
                             <a href="https://github.com/roberjc/CBDapp" class="btn pi-btn-base pi-btn-no-border pi-btn-big">
-						Documentación
-					</a>
+                        Documentación
+                    </a>
                         </p>
                     </div>
                 </div>
@@ -68,9 +68,12 @@
                     <h2 class="h4 pi-weight-700 pi-uppercase pi-letter-spacing pi-has-bg pi-margin-bottom-20">Artículos</h2>
 
                     <script type="text/javascript">
-                        // Recupera el nombre de la base de datos de la URL (en este caso "items")
-                        var DATABASE = "/" + window.location.href.split("/")[3];
 
+                        // Guardamos el nombre de la base de datos sobre la que trabajamos
+                        var DATABASE = "/items";
+
+                        // Este método recupera todos los items disponibles en la vista y 
+                        // los almacena en un array de items 
                         function getitems() {
                             $.ajax({
                                 url: DATABASE + "/_design/items/_view/items",
@@ -86,6 +89,8 @@
                             });
                         }
 
+                        // Este método muestra los items anteriormente almacenados en una tabla con
+                        // sus distintas opciones
                         function displayitems(items) {
 
                             if (items === undefined || items.length == 0) {
@@ -114,8 +119,9 @@
                             $('#items').append(html);
                         }
 
+                        // Este método crea el cuadro de diálogo para añadir un nuevo item y lo muestra
                         function additem() {
-                            var desc = prompt("Enter a item description");
+                            var desc = prompt("Introduce la descripción del nuevo item:");
                             if (desc) {
                                 var item = {
                                     "item": desc
@@ -133,8 +139,10 @@
                             }
                         }
 
+                        // Este método crea el cuadro de diálogo para editar un item existente y mostrar
+                        // su modificación
                         function edititem(item) {
-                            var desc = prompt("New item description", item.item);
+                            var desc = prompt("Modifica la descripción de este item:", item.item);
                             if (desc) {
                                 item.item = desc;
 
@@ -150,8 +158,9 @@
                             }
                         }
 
+                        // Este método crea el cuadro de diálogo para eliminar un item existente
                         function deleteitem(item) {
-                            var doit = confirm("Do you really want to delete the item '" +
+                            var doit = confirm("¿Estás seguro de querer eliminar '" +
                                 item.item + "'?");
                             if (doit) {
                                 $.ajax({
@@ -164,7 +173,7 @@
                             }
                         }
 
-                        // create view (will fail if already existing)
+                        // Crea la vista necesaria para tener disponibles los items
                         function createView() {
                             var view = {
                                 "language": "javascript",
